@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/component.css';
 
-const Input = ({ type = 'text', value, placeholder, className, onChange }) => {
+const Input = ({ type = 'text', value, placeholder, className, onChange, isRequired }) => {
     return (
         <input
             type={type}
@@ -12,6 +12,7 @@ const Input = ({ type = 'text', value, placeholder, className, onChange }) => {
             // Basic email validation
             pattern={type === 'email' ? "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" : undefined}
             title={type === 'email' ? "Please enter a valid email address" : undefined}
+            required = {isRequired}
         />
     );
 };

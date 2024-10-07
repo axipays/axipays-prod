@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+// icons
 import Icon from "../media/icon/icons";
-import LoginAnimation from '../components/AuthAnimation.jsx';
+
+// icon-images
 import Company_Logo_short from '../media/image/companyLogo_short.webp';
 import LoginLine from '../media/image/login-line.png';
+
+// css
 import '../styles/pages.css';
+
+// components
+import Button from "../components/utilitis/Button.jsx";
+import Input from "../components/utilitis/Input.jsx";
+import LoginAnimation from '../components/AuthAnimation.jsx';
 
 const Auth = () => {
     const [activePage, setActivePage] = useState('login');
@@ -15,6 +25,17 @@ const Auth = () => {
     });
 
     const [hasSwitched, setHasSwitched] = useState(false);
+
+    // Manage multiple fields with a single useState hook
+    const [fields, setFields] = useState({});
+
+    // Dynamic handler for input changes
+    const handleInputChange = (field, value) => {
+        setFields((prevFields) => ({
+            ...prevFields,
+            [field]: value,
+        }));
+    };
 
     const togglePasswordVisibility = (field) => {
         setPasswordVisibility((prevState) => ({
@@ -28,20 +49,27 @@ const Auth = () => {
         setHasSwitched(true);
     };
 
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const { email, password, name } = fields;
+        console.log("Email:", email);
+        console.log("Password:", password);
+        console.log("Name:", name);
+    };
+
     return (
         <div className='body'>
             <div className='login-page'>
                 <Link to='/' className='authBackBtn'>
                     <div className='backBtn-label'>
-                       <div className='ic'>
-                        <Icon
+                        <div className='favicon'>
+                            <Icon
                                 name="arrow_left"
                                 width={25}
                                 height={15}
                                 color="#0066ff"
-                                className="backBtn-label"
                             />
-                       </div>
+                        </div>
                         <p>Back</p>
                     </div>
                 </Link>
@@ -88,22 +116,30 @@ const Auth = () => {
                                         <form className='login-form'>
                                             <span>
                                                 <div className="input-group">
-                                                    <input type="text" placeholder="Email Id" required />
+                                                    <Input
+                                                        type="email"
+                                                        value={fields.email}
+                                                        placeholder="Email Id"
+                                                        onChange={(value) => handleInputChange('email', value)}
+                                                        isRequired="true"
+                                                    />
                                                 </div>
                                                 <div className="input-group input-password">
-                                                    <input
+                                                    <Input
                                                         type={passwordVisibility.login ? "text" : "password"}
+                                                        value={fields.password}
                                                         placeholder="Password"
-                                                        required
+                                                        onChange={(value) => handleInputChange('password', value)}
+                                                        isRequired="true"
                                                     />
                                                     <span className="password-icon" onClick={() => togglePasswordVisibility('login')}>
-                                                        {passwordVisibility.login ? <Icon name="Hide" className="grey" /> : <Icon name="Hide" className="grey" />}
+                                                        {passwordVisibility.login ? <Icon name="Hide" /> : <Icon name="Hide" className="grey" />}
                                                     </span>
                                                 </div>
                                             </span>
                                             <label className='forgotpassword-link'>Forgot Password?</label>
                                             <Link to='/home'>
-                                                <button className='auth_btn' type='submit'>
+                                                <Button className='auth_btn' type='submit' onClick={handleLogin}>
                                                     <span>Log In</span>
                                                     <Icon
                                                         name="auth_btn_right_arrow"
@@ -111,7 +147,7 @@ const Auth = () => {
                                                         height={25}
                                                         color="#ffffff"
                                                     />
-                                                </button>
+                                                </Button>
                                             </Link>
                                         </form>
                                     </div>
@@ -121,49 +157,86 @@ const Auth = () => {
                                         <form className='signup-form'>
                                             <div>
                                                 <div className="input-group">
-                                                    <input type="text" placeholder="Full Name" required />
+                                                    <Input 
+                                                        type="text" 
+                                                        placeholder="Full Name" 
+                                                        onChange={(value) => handleInputChange('name', value)} 
+                                                        required="true"
+                                                    />
                                                 </div>
                                                 <div className="input-group">
-                                                    <input type="text" placeholder="Email Id" required />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="input-group">
-                                                    <input type="text" placeholder="Country" required />
-                                                </div>
-                                                <div className="input-group">
-                                                    <input type="text" placeholder="Contact No." required />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="input-group">
-                                                    <input type="text" placeholder="Company Name" required />
-                                                </div>
-                                                <div className="input-group">
-                                                    <input type="text" placeholder="Company URL" required />
+                                                    <Input 
+                                                        type="text" 
+                                                        placeholder="Email Id"
+                                                        onChange={(value) => handleInputChange('email', value)}
+                                                        required="true" 
+                                                    />
                                                 </div>
                                             </div>
                                             <div>
                                                 <div className="input-group">
-                                                    <input type="text" placeholder="Skype/Telegram" required />
+                                                    <Input 
+                                                        type="text" 
+                                                        placeholder="Country" 
+                                                        onChange={(value) => handleInputChange('country', value)}
+                                                        required="true" 
+                                                    />
+                                                </div>
+                                                <div className="input-group">
+                                                    <Input 
+                                                        type="text" 
+                                                        placeholder="Contact No." 
+                                                        onChange={(value) => handleInputChange('contact', value)}
+                                                        required="true" 
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="input-group">
+                                                    <Input 
+                                                        type="text" 
+                                                        placeholder="Company Name" 
+                                                        onChange={(value) => handleInputChange('companyName', value)}
+                                                        required="true" 
+                                                    />
+                                                </div>
+                                                <div className="input-group">
+                                                    <Input 
+                                                        type="text" 
+                                                        placeholder="Company URL" 
+                                                        onChange={(value) => handleInputChange('companyURL', value)}
+                                                        required="true" 
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="input-group">
+                                                    <Input 
+                                                        type="text" 
+                                                        placeholder="Skype/Telegram" 
+                                                        onChange={(value) => handleInputChange('povID', value)}
+                                                        required="true" 
+                                                    />
                                                 </div>
                                             </div>
                                             <div>
                                                 <div className="input-group input-password">
-                                                    <input
+                                                    <Input
                                                         type={passwordVisibility.create ? "text" : "password"}
                                                         placeholder="Create Password"
-                                                        required
+                                                        onChange={(value) => handleInputChange('new_password', value)}
+                                                        required="true" 
                                                     />
                                                     <span className="password-icon" onClick={() => togglePasswordVisibility('create')}>
-                                                        {passwordVisibility.create ? <Icon name="Hide" className="grey" /> : <Icon name="Hide"className="grey" />}
+                                                        {passwordVisibility.create ? <Icon name="Hide" className="grey" /> : <Icon name="Hide" className="grey" />}
                                                     </span>
                                                 </div>
                                                 <div className="input-group input-password">
-                                                    <input
+                                                    <Input
                                                         type={passwordVisibility.confirm ? "text" : "password"}
                                                         placeholder="Confirm Password"
-                                                        required
+                                                        onChange={(value) => handleInputChange('new_confirm', value)}
+                                                        required="true" 
                                                     />
                                                     <span className="password-icon" onClick={() => togglePasswordVisibility('confirm')}>
                                                         {passwordVisibility.confirm ? <Icon name="Hide" className="grey" /> : <Icon name="Hide" className="grey" />}
@@ -171,12 +244,17 @@ const Auth = () => {
                                                 </div>
                                             </div>
                                             <div className='termspolicy'>
-                                                <span><input type='checkbox' /></span>
-                                                <span>
-                                                    <label>I agree to <i>privacy policy and terms</i></label>
-                                                </span>
+                                                <div>
+                                                    <Input type='checkbox' className="type-checkbox" />
+                                                    <p>I agree to <i>privacy policy and terms</i></p>
+                                                </div>
+
+                                                <div>
+                                                    <Input type='checkbox' />
+                                                    <p>Make this email account as root</p>
+                                                </div>
                                             </div>
-                                            <button className='auth_btn signup_btn' type='submit'>
+                                            <Button className='auth_btn signup_btn' onClick={handleLogin}>
                                                 Sign Up
                                                 <Icon
                                                     name="auth_btn_right_arrow"
@@ -184,7 +262,7 @@ const Auth = () => {
                                                     height={25}
                                                     color="#ffffff"
                                                 />
-                                            </button>
+                                            </Button>
                                         </form>
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/component.css"
 
 function LoginVideo() {
     return (
@@ -10,7 +11,7 @@ function LoginVideo() {
                 </div>
                 <div className="card-body">
                     <input type="text" placeholder="Enter Here" disabled />
-                    <div className="card-button" >  
+                    <div className="card-button" >
                         <div className="white-line"></div>
                     </div>
                 </div>

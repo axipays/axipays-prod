@@ -469,3 +469,396 @@
         box-shadow: 0px 4px 15px rgb(8, 10, 11);
         z-index: 1;
     }
+
+
+/* ..............Cards............... */
+
+.top-card-container {
+    width: 35%;
+    height: fit-content;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 25px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    margin-top: -10px;
+    padding: 12px;
+    position: relative;
+    z-index: 1;
+    animation: upDown 2s ease-in-out infinite;
+    opacity: 0.9;
+}
+
+@keyframes upDown {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.bottom-card-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 53%;
+    height: fit-content;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #d8ecff;
+    opacity: 0.5;
+    margin: 20px auto;
+    padding: 10px;
+    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    padding: 1px;
+}
+
+.card-title {
+    height: 8px;
+    width: 70%;
+    border-radius: 3px;
+}
+
+.card-title-two {
+    margin-top: 7px;
+    background-color: #d9d9d9;
+    height: 8px;
+    width: 55%;
+    border-radius: 3px;
+}
+
+.line-one-animation {
+    animation: titleExpand 2s ease-in-out infinite;
+}
+
+.line-two-animation {
+    animation: titleTwoExpand 2s ease-in-out infinite;
+}
+
+@keyframes titleExpand {
+    0% {
+        width: 70%;
+    }
+
+    50% {
+        width: 100%;
+    }
+
+    100% {
+        width: 70%;
+    }
+}
+
+@keyframes titleTwoExpand {
+    0% {
+        width: 55%;
+    }
+
+    50% {
+        width: 65%;
+    }
+
+    100% {
+        width: 55%;
+    }
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1px;
+    padding-top: 10px;
+    color: rgb(241, 241, 241);
+}
+
+.card-body input {
+    width: 110%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid rgb(237, 245, 255);
+    color: rgb(241, 241, 241);
+    background-color: transparent;
+}
+
+.card-body input::placeholder {
+    color: #888;
+    opacity: 0.2;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.card-button {
+    background: rgb(0, 123, 255);
+    color: #fff;
+    width: 100%;
+    height: 35px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: -6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: 200% 100%;
+    background: linear-gradient(90deg, rgba(0, 123, 255, 1) 0%, rgba(0, 74, 153, 1) 100%);
+    cursor: auto;
+}
+
+
+.bottom-line {
+    width: 100%;
+    margin-top: 10px;
+    animation: none;
+    transition: none;
+}
+
+.white-line {
+    background-color: #fff;
+    height: 8px;
+    width: 80px;
+    border-radius: 3px;
+}
+
+.dots {
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.red {
+    background-color: #EE6868;
+}
+
+.green {
+    background-color: #8FC2DB;
+}
+
+.blue {
+    background-color: #548BF7;
+}
+
+.white {
+    background-color: #fff;
+    width: 130px;
+}
+
+.column-for-login {
+    padding: 5px;
+    margin-top: 2px;
+}
+
+.first-div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.first-line {
+    height: 10px;
+    width: 120px;
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+.second-line {
+    margin-left: 10px;
+    margin-top: 8px;
+}
+
+.third-line {
+    width: 300px;
+    height: 20px;
+}
+
+.box {
+    width: 60px;
+    height: 45px;
+    border-radius: 4px;
+}
+
+.lines-div {
+    margin-top: 5px;
+}
+
+
+@media (max-width: 1024px) {
+    .login-left .container, .login-right .auth-form {
+        padding: 20px;
+    }
+
+    .login-left .container .login-left-header h2 {
+        font-size: 2rem;
+    }
+
+    .login-left .container .login-left-header p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .auth-pages {
+        width: 60%;
+    }
+
+    .auth-pages button {
+        width: 200px;
+    }
+
+    .input-group input {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-left, .login-right {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .auth-form-container {
+        height: auto;
+    }
+
+    .login-left .container, .login-right .auth-form {
+        padding: 15px;
+        width: 90%;
+    }
+
+    .login-left .container .login-left-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .auth-form-container .login-form input {
+        padding: 12px;
+    }
+  
+}
+
+@media (max-width: 576px) {
+    .auth-pages {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .auth-pages button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .input-group input {
+        padding: 10px;
+    }
+
+    .login-left .container .login-left-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .login-left .container .login-left-header p {
+        font-size: 0.9rem;
+    }
+    
+    .login-left .container .login-left-header .loginbackground {
+        display: none !important;
+     }
+
+     .top-card-container, .bottom-card-container {
+        display: none;
+     }
+     
+       
+}
+
+/* Card Responsive */
+@media (max-width: 768px) {
+    .top-card-container {
+        width: 90%;
+    }
+
+    .login-left {
+        width: 100% !important;
+        position: relative;
+        height: 100%;
+    }
+
+    .login-right {
+        width: 100% !important;
+        position: absolute;
+    }
+
+    .login-left .container {
+        width: 90%;
+        height: 100%;
+    }
+
+    .login-left .container .login-left-body {
+        height: 50vh;  
+        margin-top: 10px;
+    }
+
+    .login-left .container .login-left-footer .firstLine {
+        font-size: 1.6rem;
+    }
+
+    .top-card-container, .bottom-card-container {
+        display: none;
+     }
+
+     .auth-form-container {
+        position: relative;
+        height: 300px;
+    }
+     
+    .auth-pages {
+        margin-top: 100px;
+        height: 50px;
+        width: 65%;
+        margin-bottom: 5px;
+        position: relative;
+    }
+
+    .auth-pages button {
+        font-size: 1rem;
+    }
+
+    .auth-form-container .login-form {
+        width: 100% !important;
+        height: 40vh !important;
+        left: 1%;
+        position: relative;
+    }
+    
+    .auth-form-container .signup-form {
+        width: 100% !important;
+        height: 50vh !important;
+        position: relative;
+        left: 0%;
+    }
+    
+    .auth-form-container .signup-form div .input-group {
+        margin: 2px;
+    }
+
+    .auth_btn {
+        width: 70%;
+        padding: 6px 0;
+    }
+}
