@@ -1,15 +1,16 @@
 import React from 'react';
 
 // icons 
-import whiteRightArrow from "../media/image/white-rightArrow.png";
-import internet from "../media/icon/internet.png";
-import safe from "../media/icon/safe.png";
-import secure from "../media/icon/secure.png";
-import reliable from "../media/icon/reliable.png";
-import analyticFeature from "../media/image/analytics.png";
-import apiFeature from "../media/image/api.png";
-import controlFeature from "../media/image/controls.png";
-import globalFeature from "../media/image/global.png";
+// import whiteRightArrow from "../media/image/white-rightArrow.png";
+import internet from "../../media/image/internet.webp";
+import safe from "../../media/icon/safe.png";
+import secure from "../../media/icon/secure.png";
+import reliable from "../../media/icon/reliable.png";
+import analyticFeature from "../../media/image/analytics.webp";
+import apiFeature from "../../media/image/api.webp";
+import controlFeature from "../../media/image/controls.webp";
+import globalFeature from "../../media/image/global.webp";
+import Icon from '../../media/icon/icons';
 
 const Feature = () => {
     return (
@@ -21,7 +22,8 @@ const Feature = () => {
                             <h1>Turning innovative ideas into amazing</h1>
                             <div>
                                 <div className="arrow-div">
-                                    <img src={whiteRightArrow} alt="arrow" />
+                                    {/* <img src={whiteRightArrow} alt="arrow" /> */}
+                                    <Icon name="arrow_right" color="white"/>
                                 </div>
                                 <h1>solutions</h1>
                             </div>
@@ -33,6 +35,7 @@ const Feature = () => {
                         <button className="feature-button">Discover More</button>
                         <div className="feature-left-section-bottom">
                             <img src={internet} alt="globe" />
+                            {/* <Icon name="arrow_right" color="white"/> */}
                             <h3>
                                 Global Payments, Securely Delivered
                                 <br /> with Reliability You Can Trust

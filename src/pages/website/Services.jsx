@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 // icons
-import diagonalarrow from "../media/icon/north_east.svg";
-import img from "../media/image/Img.png";
-import servicesAnimation from "../media/animations/services.mp4"
+import Icons from "../../media/icon/icons";
+import img from "../../media/image/servicePageCenterImage.webp";
+import Icon from '../../media/icon/icons';
+// import servicesAnimation from "../media/animations/services.mp4"
 
 const Service = () => {
   const section1Ref = useRef(null);
@@ -75,7 +76,7 @@ const Service = () => {
   return (
       <div className="wrapper" ref={wrapperRef}>
         <section ref={section1Ref} id="section1" className="section">
-          <img src={servicesAnimation} alt="Services"></img>
+          {/* <img src={servicesAnimation} alt="Services"></img> */}
           <div className="service-front-page-content">
             <h1>
               BEYOND PAYMENTS:
@@ -109,10 +110,11 @@ const Service = () => {
                     <div className="service-learn-more-div">
                       <span>Learn More</span>
                       <div className="service-arrow-div">
-                        <img
+                        {/* <img
                           src={diagonalarrow} alt="arrow"
                           className="service-arrow"
-                        ></img>
+                        ></img> */}
+						< Icon name="arrow_up_right"/>
                       </div>
                     </div>
                   </div>
@@ -139,10 +141,11 @@ const Service = () => {
                     <div className="service-learn-more-div">
                       <span>Learn More</span>
                       <div className="service-arrow-div">
-                        <img
+                        {/* <img
                           src={diagonalarrow} alt="arrow"
                           className="service-arrow"
-                        ></img>
+                        ></img> */}
+						< Icon name="arrow_up_right"/>
                       </div>
                     </div>
                   </div>
@@ -160,10 +163,11 @@ const Service = () => {
                     <div className="service-learn-more-div">
                       <span>Learn More</span>
                       <div className="service-arrow-div">
-                        <img
+                        {/* <img
                           src={diagonalarrow} alt="arrow"
                           className="service-arrow"
-                        ></img>
+                        ></img> */}
+						< Icon name="arrow_up_right"/>
                       </div>
                     </div>
                   </div>
@@ -181,10 +185,11 @@ const Service = () => {
                     <div className="service-learn-more-div">
                       <span>Learn More</span>
                       <div className="service-arrow-div">
-                        <img
+                        {/* <img
                           src={diagonalarrow} alt="arrow"
                           className="service-arrow"
-                        ></img>
+                        ></img> */}
+						< Icon name="arrow_up_right"/>
                       </div>
                     </div>
                   </div>
@@ -202,10 +207,11 @@ const Service = () => {
                     <div className="service-learn-more-div">
                       <span>Learn More</span>
                       <div className="service-arrow-div">
-                        <img
+                        {/* <img
                           src={diagonalarrow} alt="arrow"
                           className="service-arrow"
-                        ></img>
+                        ></img> */}
+						< Icon name="arrow_up_right"/>
                       </div>
                     </div>
                   </div>
