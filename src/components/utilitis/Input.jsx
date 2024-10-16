@@ -10,7 +10,7 @@ const Input = ({ type = 'text', value, placeholder, className, onChange, isRequi
             placeholder={placeholder}
             onChange={(e) => onChange(e.target.value)}
             // Basic email validation
-            pattern={type === 'email' ? "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" : undefined}
+            pattern={type === 'email' ? "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$" : undefined}
             title={type === 'email' ? "Please enter a valid email address" : undefined}
             required = {isRequired}
         />

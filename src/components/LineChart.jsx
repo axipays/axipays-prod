@@ -10,31 +10,31 @@ const LineChart = () => {
     marker: { color: 'blue' }
   };
 
-//   const trace2 = {
-//     x: [1, 2, 3, 4],
-//     y: [16, 5, 11, 9],
-//     type: 'scatter',
-//     mode: 'lines+markers',
-//     marker: { color: 'red' }
-//   };
-
   const data = [trace1];
   const layout = {
-    plot_bgcolor: 'rgba(0, 0, 0, 0)',  // Transparent plot background
-    paper_bgcolor: 'rgba(0, 0, 0, 0)',
+    height:300,
     margin: {
-      l: 50,  // Left margin
-      r: 50,  // Right margin
-      t: 80, // Top margin
-      b: 30   // Bottom margin
+      l: 50,  
+      r: 50, 
+      t: 80, 
+      b: 80  
     },
   };
   return (
+    <div  style={{
+      position: 'relative',
+      width: '100%',
+      height: '100%', 
+      borderRadius: '15px',
+      overflow: 'hidden',
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    }}>
     <Plot
       data={data}
       layout={layout}
-      style={{ width: '100%', height: '100%' }}
+      style={{ width: '100%', height: '100%'}}
     />
+    </div>
   );
 };
 

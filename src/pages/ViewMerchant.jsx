@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Sidebar from "../components/Sidebar.jsx";
 import Icon from "../media/icon/icons.jsx";
-import UserProfile from "../media/image/UserProfile.webp";
+import UserProfile from "../media/image/UserProfile.png";
 
 function ViewMerchant() {
     const [activeTab, setActiveTab] = useState("Business Details");
@@ -32,7 +32,7 @@ function ViewMerchant() {
                 <div className="viewmerchant-card1">
                     <h4>Profile Details</h4>
                     <div className="profiledetails">
-                        <img src={UserProfile} alt="Profile" className="profile-image" />
+                        <img src={UserProfile} alt="ProfilePicture" className="profile-image" />
                         <p>Delasports-bellona</p>
                         <div className="profile-status">
                             <p>Active</p>
@@ -65,7 +65,7 @@ function ViewMerchant() {
                             <div className="about-right">
                                 <p>delasportsbellona_user</p>
                                 <p>930</p>
-                                <p>https://www.delasportsbellona.com</p>
+                                <p>www.delasportsbellona.com</p>
                                 <p>Gaming</p>
                             </div>
                         </div>
@@ -141,7 +141,7 @@ function ViewMerchant() {
                                     color="#00264c"
                                     className="ic building"
                                 />
-                                <p>Business Details</p>
+                                Business Details
                         </div>
                         <div
                             className={`tab ${activeTab === "Rates" ? "active" : ""}`}
@@ -154,7 +154,7 @@ function ViewMerchant() {
                                 color="#00264c"
                                 className="ic building"
                             />
-                            <p>Rates</p>
+                            Rates
                         </div>
                         <div
                             className={`tab ${activeTab === "Settlements" ? "active" : ""}`}
@@ -167,7 +167,7 @@ function ViewMerchant() {
                                 color="#00264c"
                                 className="ic building"
                             />
-                            <p>Settlements</p>
+                            Settlements
                         </div>
                         <div
                             className={`tab ${activeTab === "Secrets" ? "active" : ""}`}
@@ -180,10 +180,11 @@ function ViewMerchant() {
                                 color="#00264c"
                                 className="ic building"
                             />
-                            <p>Secrets</p>
+                            Secrets
                         </div>
                     </div>
 
+                    {/* Tab content rendering */}
                     {activeTab === "Business Details" && (
                         <>
                             <h4>Business Details</h4>
@@ -315,7 +316,7 @@ function ViewMerchant() {
                                     <p>Public Key</p>
                                 </div>
                                 <h4>API Key</h4>
-                                <p className="api-key">**********************</p>
+                                <p className="api-key">**********************                          </p>
                             </div>
                             <div className="secrets-card2">
                                 <div className="api-access2">

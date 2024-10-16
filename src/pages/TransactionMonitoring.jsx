@@ -347,7 +347,7 @@ const TransactionMonitoring = () => {
                             width={20}
                             height={20}
                             color="#000" />
-                        <Button className="active-quick-search-btn export-btn" >
+                        <div className="active-quick-search-btn export-btn" >
                             <Icon
                                 name="down_cloud_line"
                                 width={22}
@@ -355,7 +355,7 @@ const TransactionMonitoring = () => {
                                 color="white"
                             />
                             Export
-                        </Button>
+                        </div>
                     </div>
                 </div>
 

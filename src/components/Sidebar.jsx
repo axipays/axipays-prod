@@ -53,49 +53,64 @@ function Sidebar() {
             items: [
                 { name: "Manage Merchant", icon: "person_book", link: "/managemerchant" },
                 {
-                    name: "Manage User", icon: "group", link: "/home", dropdown: true, submenu: [
-                        { name: "Add User", link: "/home" },
-                        { name: "Edit User", link: "/home" },
-                        { name: "Delete User", link: "/home" },
-                        { name: "Update User", link: "/home" },
-                        { name: "User Activity", link: "/home" }
+                    name: "Manage User", icon: "group", disabled: true, dropdown: false, submenu: [
+                        { name: "Add User", link: "", disabled: true },
+                        { name: "Edit User", link: "", disabled: true },
+                        { name: "Delete User", link: "", disabled: true },
+                        { name: "Update User", link: "", disabled: true },
+                        { name: "User Activity", link: "", disabled: true }
                     ]
                 },
-                { name: "Manage Settlement", icon: "checkbook", link: "/home", },
-                { name: "Manage API Doc", icon: "apk_document", link: "/home" }
+                { name: "Manage Settlement", icon: "checkbook",link: "/home", disabled: true },
+                { name: "Manage API Doc", icon: "apk_document",link: "/home", disabled: true }
             ]
         },
         {
             section: "Transactions",
             items: [
-                { name: "Payment Gateway", icon: "paymentgateway", link: "/home" },
+                { name: "Payment Gateway", icon: "paymentgateway", link: "/home", disabled: true },
                 { name: "Transaction Monitoring", icon: "id_card", link: "/transactionmonitoring" },
-                { name: "Report", icon: "report", link: "/home" }
+                { name: "Report", icon: "report", link: "/home", disabled: true }
             ]
         },
         {
             section: "Others",
             items: [
-                { name: "AQ Test", icon: "apps", link: "/home" },
-                { name: "Master Setting", icon: "master_settings", link: "/home" }
+                { name: "AQ Test", icon: "apps", link: "/home", disabled: true },
+                { name: "Master Setting", icon: "master_settings", link: "/home", disabled: true }
             ]
         }
     ];
 
-    const SidebarItem = ({ item }) => (
-        <Link to={item.link} className={`sidebar-item ${item.dropdown ? "expandable" : ""} ${activeItem === item.name ? "active" : ""}`} onClick={() => handleItemClick(item.name)}>
-            <i className="icon">
-                <Icon name={item.icon} width={22} height={22} color="black" />
-            </i>
-            <span>{item.name}</span>
-            {item.dropdown && (
-                <i className="icon icon2">
-                    <Icon name={isUserDropdownOpen ? "arrow_downward" : "arrow_right"} width={22} height={22} color="black" />
+    const SidebarItem = ({ item }) => {
+        const handleClick = () => {
+            if (!item.disabled) {
+                handleItemClick(item.name);
+            }
+        };
+
+        return item.disabled ? (
+            <span className={`sidebar-item disabled`}>
+                <i className="icon">
+                    <Icon name={item.icon} width={22} height={22} color="black" />
                 </i>
-            )}
-            {activeItem === item.name && !item.dropdown && <div className='sidebar-active'></div>}
-        </Link>
-    );
+                <span>{item.name}</span>
+            </span>
+        ) : (
+            <Link to={item.link} className={`sidebar-item ${item.dropdown ? "expandable" : ""} ${activeItem === item.name ? "active" : ""}`} onClick={handleClick}>
+                <i className="icon">
+                    <Icon name={item.icon} width={22} height={22} color="black" />
+                </i>
+                <span>{item.name}</span>
+                {item.dropdown && (
+                    <i className="icon icon2">
+                        <Icon name={isUserDropdownOpen ? "arrow_downward" : "arrow_right"} width={22} height={22} color="black" />
+                    </i>
+                )}
+                {activeItem === item.name && !item.dropdown && <div className='sidebar-active'></div>}
+            </Link>
+        );
+    };
 
     return (
         <div className='sidebar'>
@@ -123,7 +138,6 @@ function Sidebar() {
                                                     <span>{subItem.name}</span>
                                                 </Link>
                                             ))}
-
                                         </div>
                                     )}
                                 </div>

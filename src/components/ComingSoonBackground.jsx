@@ -10,7 +10,7 @@ import card from "../media/image/Card_image.webp";
 const Video = () => {
     const [visibleLines, setVisibleLines] = useState([0, 1, 2, 3]); 
     const [direction, setDirection] = useState("remove"); 
-    const [currentIndex, setCurrentIndex] = useState(0); // Index to track current line being shown/hidden
+    const [currentIndex, setCurrentIndex] = useState(0); 
     const maxLines = 4;
 
     useEffect(() => {
@@ -45,8 +45,7 @@ const Video = () => {
 
             return () => clearTimeout(timeout);
         };
-
-        startTransition(); // Start the first transition
+        startTransition(); 
 
         return () => {
             clearInterval(interval); 

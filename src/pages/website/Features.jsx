@@ -1,7 +1,6 @@
 import React from 'react';
 
 // icons 
-// import whiteRightArrow from "../media/image/white-rightArrow.png";
 import internet from "../../media/image/internet.webp";
 import safe from "../../media/icon/safe.png";
 import secure from "../../media/icon/secure.png";

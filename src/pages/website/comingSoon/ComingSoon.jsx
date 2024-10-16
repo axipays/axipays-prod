@@ -7,7 +7,7 @@ import "../../../services/i18n";
 import { useTranslation, Trans } from 'react-i18next';
 
 // css
-import "../../../styles/coming-soon.css"; // Import the CSS file for styling.
+import "../../../styles/coming-soon.css";
 
 // components
 import Button from "../../../components/utilitis/Button.jsx";
@@ -210,7 +210,6 @@ function ComingSoon() {
                     <div className="comingsoon_header-btn">
                         <div className="comingsoon_header-mobile_btn"></div>
                         <div className="comingsoon_header-laptop_btn">
-                            {/* <Button label={`Contact Us!${<Icon name="check" width={40} height={40} color="blue" />}`} className="primary-btn-dark" onClick={handleSubmit} /> */}
                             <Link to="https://www.linkedin.com/company/axipays/" className="desktopHeaderBtn">
                                 <Button className="primary-btn-dark" label="Goto LinkedIn">
                                     {t('connect_us')}
