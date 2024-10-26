@@ -326,9 +326,9 @@
 }
 
 
-.auth-form-container .signup-form .termspolicy p {
+/* .auth-form-container .signup-form .termspolicy p {
     
-}
+} */
 
 .auth-form-container .signup-form .termspolicy p i {
     color: #0066ff;
@@ -1057,7 +1057,7 @@ p {
     font-size: 0.8rem;
     color: #636363;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    /* -webkit-line-clamp: 4; */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
