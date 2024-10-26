@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { handleError } from '../services/errorService'; // External error handling module (you can create this)
 
 // API base URL
-const BASE_URL = 'https://paylinkup.online/';
+const BASE_URL = 'https://api.vancipay.com/';
 
 // Secure headers for all requests
 const getHeaders = () => ({
@@ -44,6 +44,7 @@ export const apiRequest = async (path, method = 'GET', body = null) => {
         // Handle errors (client-side or server-side)
         throw handleError(error);
     }
+    
 };
 
 // Ensure prop-types for secure API calls

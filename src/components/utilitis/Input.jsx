@@ -1,20 +1,85 @@
 import React from 'react';
-import '../../styles/component.css';
+import '../../styles/component.css'; // Assuming you have common styles
 
-const Input = ({ type = 'text', value, placeholder, className, onChange, isRequired }) => {
-    return (
+// Reusable FormInput component
+export const Input = ({
+  label,
+  id,
+  placeholder,
+  type = "text",
+  value,
+  onChange,
+  onKeyDown,
+  className = "",
+  labelClass = "",
+  inputClass = "",
+  hideLabel = false,  // New prop to control label rendering
+  hideWrapper = false 
+}) => (
+  <>
+    {!hideWrapper ? (
+      <div className={`id-input-div ${className}`}>
+        {!hideLabel && (
+          <label
+            className={`id-label ${value ? "filled-id-label" : ""} ${labelClass}`}
+            htmlFor={id}
+          >
+            {label}
+          </label>
+        )}
         <input
-            type={type}
-            className={`input ${className}`}
-            value={value}
-            placeholder={placeholder}
-            onChange={(e) => onChange(e.target.value)}
-            // Basic email validation
-            pattern={type === 'email' ? "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$" : undefined}
-            title={type === 'email' ? "Please enter a valid email address" : undefined}
-            required = {isRequired}
+          id={id}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+          className={`transaction-input ${inputClass}`}
         />
-    );
-};
+      </div>
+    ) : (
+      <input
+        id={id}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={onKeyDown}
+        placeholder={placeholder}
+        className={`transaction-input ${inputClass}`}
+      />
+    )}
+  </>
+);
 
-export default Input;
+// Reusable SelectInput component
+export const Select = ({
+  label,
+  id,
+  options = [],
+  value,
+  onChange,
+  onKeyDown,
+  className = "",
+  labelClass = "",
+  selectClass = ""
+}) => (
+  <div className={`id-input-div ${className}`}>
+    <label className={`id-label ${value ? "filled-id-label" : ""} ${labelClass}`} htmlFor={id}>
+      {label}
+    </label>
+    <select
+      id={id}
+      value={value}
+      onChange={(e)=>onChange(e.target.value)}
+      onKeyDown={onKeyDown}
+      className={`select-div ${selectClass}`}
+    >
+      <option value="">Select {label}</option>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  </div>
+);

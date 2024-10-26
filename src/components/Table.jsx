@@ -1,26 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import "../styles/component.css";
-import data from "../assets/testdata/data";
-import flag from "../media/image/flag/france.png";
-import Visa from "../media/image/visa.png";
-import MasterCard from "../media/image/mastercard.png";
 import Icon from "../media/icon/icons";
+import nodata from "../media/image/no-data.webp"
 
-const TransactionTable = ({ headerLabels = [], onViewClick }) => {
+const TransactionTable = ({ headerLabels = [],tableData=[],onViewClick,isCopy = false, onTotalAmountChange}) => {
     const [expandedRows, setExpandedRows] = useState([]);
     const [activeOptionRow, setActiveOptionRow] = useState(null);
     const [filterText] = useState("");
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
+    const [menuPosition, setMenuPosition] = useState('below');
+    
 
-    const filteredData = data.filter((row) =>
-        Object.values(row).some((val) =>
-            String(val).toLowerCase().includes(filterText.toLowerCase())
+    const filteredData = Array.isArray(tableData)
+        ? tableData.filter((row) =>
+            Object.values(row).some((val) =>
+                val && String(val).toLowerCase().includes(filterText.toLowerCase())
+            ) 
         )
-    );
+        : [];
 
     const startIndex = (currentPage - 1) * rowsPerPage;
     const paginatedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
+    
+    const totalAmount = paginatedData.reduce((acc, row) => {
+        const amount = parseFloat(row.amount); // Adjust according to your data structure
+        return acc + (isNaN(amount) ? 0 : amount);
+    }, 0);
+
+    useEffect(() => {
+        onTotalAmountChange(totalAmount);
+    }, [totalAmount, onTotalAmountChange]);
 
     const toggleRowExpand = (index) => {
         setExpandedRows((prevExpandedRows) =>
@@ -30,9 +40,27 @@ const TransactionTable = ({ headerLabels = [], onViewClick }) => {
         );
     };
 
-    const toggleOptions = (index) => {
-        setActiveOptionRow(activeOptionRow === index ? null : index);
+    const toggleOptions = (index, event) => {
+        if (activeOptionRow === index) {
+            setActiveOptionRow(null);
+        } else {
+            const rowRect = event.target.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const menuHeight = 200;
+
+            if (windowHeight - rowRect.bottom < menuHeight) {
+                setMenuPosition('above');
+            } else {
+                setMenuPosition('below');
+            }
+
+            setActiveOptionRow(index);
+        }
     };
+
+    const closemenuOption = () => {
+        setActiveOptionRow(false)
+    }
 
     const handleRowsPerPageChange = (event) => {
         setRowsPerPage(Number(event.target.value));
@@ -51,13 +79,28 @@ const TransactionTable = ({ headerLabels = [], onViewClick }) => {
         }
     };
 
+    const handleCopy = (text) => {
+        if (isCopy) {
+            navigator.clipboard.writeText(text).then(
+                () => {
+                    alert(`Copied: ${text}`);
+                },
+                (err) => {
+                    console.error('Failed to copy text: ', err);
+                }
+            );
+        } else {
+            alert("Copy action is disabled");
+        }
+    };
+
     return (
         <div className="transaction-table-container">
             <table className="transaction-table">
                 <thead>
                     <tr>
-                        {headerLabels.map((label, index) => (
-                            <th key={index}>{label}</th>
+                        {headerLabels.slice(0, 8).map((item, index) => (
+                            <th key={index}>{item.heading}</th>
                         ))}
                         <th>Actions</th>
                     </tr>
@@ -67,45 +110,55 @@ const TransactionTable = ({ headerLabels = [], onViewClick }) => {
                         paginatedData.map((row, index) => (
                             <React.Fragment key={index}>
                                 <tr className={expandedRows.includes(index) ? "expanded-parent" : ""}>
-                                    {headerLabels.map((label, colIndex) => {
-                                        if (colIndex === 4) {
+                                    {headerLabels.slice(0, 8).map((item, colIndex) => {
+                                        if (colIndex === 0) {
+                                            // Display s.no as the continuous serial number
+                                            return <td key={item.label} onClick={() => handleCopy(row[item.label])}>{startIndex + index + 1}</td>;
+                                        }
+                                        if (colIndex === 5) {
                                             const statusClass =
-                                                row[label].toLowerCase() === "success"
+                                                row[item.label].toLowerCase() === "success"
                                                     ? "status-success"
-                                                    : row[label].toLowerCase() === "failed"
+                                                    : row[item.label].toLowerCase() === "fail"
                                                         ? "status-failed"
                                                         : "status-pending";
 
                                             return (
-                                                <td key={label}>
+                                                <td key={item.label} onClick={() => handleCopy(row[item.label])}>
                                                     <div className={`status-column ${statusClass}`}>
-                                                        <div className={`bullet ${statusClass}`}></div> {row[label]}
+                                                        <div className={`bullet ${statusClass}`}></div> {row[item.label]}
                                                     </div>
                                                 </td>
                                             );
                                         }
                                         return (
-                                            <td key={label} className={expandedRows.includes(index) ? "remover" : ""}>
-                                                {row[label]}
+                                            <td key={item.label} className={expandedRows.includes(index) ? "remover" : ""} onClick={() => handleCopy(row[item.label])}>
+                                                {row[item.label]}
                                             </td>
                                         );
                                     })}
                                     <td>
                                         <div className="more-options">
-                                            <span
-                                                className="icon-options"
-                                                onClick={() => toggleRowExpand(index)}
-                                            >
+                                        <span className="icon-options" onClick={() => toggleRowExpand(index)} >
+                                            {expandedRows.includes(index) ? (
+                                                <Icon
+                                                    name="keyboard_arrow_up"
+                                                    width={20}
+                                                    height={20}
+                                                    color="#000000"
+                                                />
+                                            ) : (
                                                 <Icon
                                                     name="keyboard_arrow_down"
                                                     width={20}
                                                     height={20}
                                                     color="#000000"
                                                 />
-                                            </span>
+                                            )}
+                                        </span>
                                             <span
                                                 className="icon-options"
-                                                onClick={() => toggleOptions(index)}
+                                                onClick={(event) => toggleOptions(index, event)}
                                             >
                                                 <Icon
                                                     name="vertical_dots"
@@ -117,68 +170,66 @@ const TransactionTable = ({ headerLabels = [], onViewClick }) => {
                                         </div>
 
                                         {activeOptionRow === index && (
-                                            <div className="options-menu active">
+                                            <div className="options-menu active-option" style={{
+                                                top: menuPosition === 'below' ? '100%' : 'auto',
+                                                bottom: menuPosition === 'above' ? '100%' : 'auto',
+                                            }}>
+                                                <div className="options-menu-head">More
+                                                    <Icon name="close_fill"
+                                                        width={20}
+                                                        height={20}
+                                                        color="#03386c"
+                                                        onClick={closemenuOption}></Icon></div>
                                                 <ul>
-                                                    <li onClick={() => onViewClick(row)}>View Transaction</li>
-                                                    <li onClick={() => alert("Delete action")}>Delete</li>
+                                                    <li onClick={() => alert("Edit action")}>
+                                                        <Icon name="checkbook"
+                                                            width={20}
+                                                            height={20}
+                                                            color="#03386c"
+                                                            className="list-icon">
+                                                        </Icon>Edit</li>
+                                                    <li onClick={() => alert("Delete action")}>
+                                                        <Icon name="person_remove"
+                                                            width={20}
+                                                            height={20}
+                                                            color="#03386c">
+                                                        </Icon>Delete</li>
+                                                    <li onClick={() => onViewClick(row)}>
+                                                        <Icon name="view_more"
+                                                            width={20}
+                                                            height={20}
+                                                            color="#03386c"></Icon>View More</li>
                                                 </ul>
                                             </div>
                                         )}
                                     </td>
                                 </tr>
-
                                 {expandedRows.includes(index) && (
                                     <tr className="expanded-row">
                                         <td colSpan={headerLabels.length + 1}>
                                             <div className="expanded-content">
                                                 <div className="expanded-content-row">
                                                     <div className="expanded-left">
-                                                        <span><span className="expand-text">Order No.</span> {row["Additional Info"]?.orderNo || "N/A"}</span>
-                                                        <div className="divider-div"></div>
-                                                        <span className="name-text"><span className="expand-text">Name</span> {row["Additional Info"]?.name || "N/A"}</span>
-                                                        <div className="divider-div"></div>
-                                                        <span><span className="expand-text">Email</span> {row["Additional Info"]?.email || "N/A"}</span>
+                                                        {headerLabels.slice(8, 11).map((item, index) => (
+                                                            <div key={index} className="expand-item">
+                                                                <div className="expanded-details"> <span className="expand-text">{item.heading}</span>
+                                                                    <span className="expand-value" onClick={() => handleCopy(row[item.label])}>{row[item.label]}</span></div>
+                                                                {(index === 0 || index === 1) && <div className="divider-div"></div>}
+                                                            </div>
+                                                        ))}
                                                     </div>
-
                                                     <div className="expanded-center">
-                                                        <span className="cards-row"><>
-                                                            <img src={flag} alt="USA flag" width={20} height={15} className="flag-icon" />  <span>{row["Additional Info"]?.flag || "N/A"}</span>
-                                                        </></span>
-                                                        <div className="divider-div"></div>
-                                                        <span className="cards-row">
-                                                            {row["Additional Info"]?.card ? (
-                                                                row["Additional Info"].card.toLowerCase() === "visa" ? (
-                                                                    <>
-                                                                        <img
-                                                                            src={Visa}
-                                                                            alt="Visa card"
-                                                                            width={35}
-                                                                            height={15}
-                                                                        />
-                                                                        <span className="divider"></span>
-                                                                        <span>{row["Additional Info"]?.card || "N/A"}</span>
-                                                                    </>
-                                                                ) : row["Additional Info"].card.toLowerCase() === "mastercard" ? (
-                                                                    <>
-                                                                        <img
-                                                                            src={MasterCard}
-                                                                            alt="Mastercard"
-                                                                            width={35}
-                                                                            height={15}
-                                                                        />
-                                                                        <span className="divider"></span>
-                                                                        <span>{row["Additional Info"]?.card || "N/A"}</span>
-                                                                    </>
-                                                                ) : (
-                                                                    <span>{row["Additional Info"].card}</span>
-                                                                )
-                                                            ) : "N/A"}
-                                                        </span>
-                                                        <div className="divider-div"></div>
-
-                                                        <span className="cards-row amount-row">{row["Additional Info"]?.amount || "N/A"}<span>{row["Additional Info"]?.currency || "N/A"}</span></span>
+                                                        {headerLabels.slice(11).map((item, index) => (
+                                                            <React.Fragment key={index}>
+                                                                <span className={`cards-row ${index === 2 ? 'amount-row' : index === 3 ? 'amount-row currency-row' : ''}`}>
+                                                                    <span className="expand-value" onClick={() => handleCopy(row[item.label])}>{row[item.label]}</span>
+                                                                </span>
+                                                                {index < headerLabels.slice(11).length - 1 && index !== 2 && index !== 3 && (
+                                                                    <div className="divider-div"></div>
+                                                                )}
+                                                            </React.Fragment>
+                                                        ))}
                                                     </div>
-
                                                     <div className="expanded-right">
                                                         <button className="btn-primary" onClick={() => onViewClick(row)}>
                                                             View More
@@ -192,25 +243,22 @@ const TransactionTable = ({ headerLabels = [], onViewClick }) => {
                             </React.Fragment>
                         ))
                     ) : (
-                        <tr>
-                            <td colSpan={headerLabels.length + 1}>
-                                No data available
-                            </td>
-                        </tr>
+                        <tbody>
+                            <div className="no-data-aviliable">
+                                <img src={nodata} alt="No data available" />
+                            </div>
+                        </tbody>
                     )}
                 </tbody>
             </table>
 
             <div className="pagination-info">
                 <div className="page-info">
-                    <p className="page-info-text">Showing</p>
-                    <p>{Math.min(currentPage * rowsPerPage, filteredData.length)}</p>
-                    <p className="page-info-text">from</p>
-                    <p>{filteredData.length}</p>
-                    <p className="page-info-text">items</p>
+                    <p className="page-info-text">Showing</p>{" "}
+                    <p>{Math.min(currentPage * rowsPerPage, filteredData.length)}</p>{" "}
+                    <p className="page-info-text">from</p>{" "}
+                    <p>{filteredData.length}</p> <p className="page-info-text">items</p>
                 </div>
-
-
 
                 <div className="pagination-buttons">
                     <select
@@ -227,21 +275,33 @@ const TransactionTable = ({ headerLabels = [], onViewClick }) => {
 
                     <button
                         className="btn-pagination"
-                        onClick={handlePrevPageClick}
+                        onClick={() => setCurrentPage(1)}
                         disabled={currentPage === 1}
                     >
                         <Icon name="double_arrow_left" width={20} height={20} color="#000" />
                     </button>
 
-                    {["arrow_left", "arrow_right"].map((direction, index) => (
-                        <button key={index} className="btn-pagination">
-                            <Icon name={direction} width={20} height={20} color="#000" />
-                        </button>
-                    ))}
+                    <button
+                        className="btn-pagination"
+                        onClick={handlePrevPageClick}
+                        disabled={currentPage === 1}
+                    >
+                        <Icon name="arrow_left" width={20} height={20} color="#000" />
+                    </button>
 
                     <button
                         className="btn-pagination"
                         onClick={handleNextPageClick}
+                        disabled={currentPage * rowsPerPage >= filteredData.length}
+                    >
+                        <Icon name="arrow_right" width={20} height={20} color="#000" />
+                    </button>
+
+                    <button
+                        className="btn-pagination"
+                        onClick={() =>
+                            setCurrentPage(Math.ceil(filteredData.length / rowsPerPage))
+                        }
                         disabled={currentPage * rowsPerPage >= filteredData.length}
                     >
                         <Icon name="double_arrow_right" width={20} height={20} color="#000" />

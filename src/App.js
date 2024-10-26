@@ -10,7 +10,7 @@ import NotFound from "./components/404NotFound";
 
 // pages
 import Auth from './pages/Auth.jsx';
-import Website from './pages/website/Landing.jsx';
+// import Website from './pages/website/Landing.jsx';
 
 import Dashboard from "./pages/Dashboard.jsx";
 import ManageMerchant from "./pages/ManageMerchant.jsx";
@@ -19,19 +19,30 @@ import TransactionMonitoring from "./pages/TransactionMonitoring.jsx";
 
 import AddAcquirer from "./pages/AddAcquirer.jsx";
 
+import ApiDoc from "./pages/ApiDoc.jsx";
+
 // lazy loading
-const ComingSoon = React.lazy(() => import("./pages/website/comingSoon/ComingSoon"));
+const Website = React.lazy(() => import("./pages/website/Landing.jsx"));
+// const ComingSoon = React.lazy(() => import("./pages/website/comingSoon/ComingSoon"));
 
 function App() {
 	return (
 		<>
 			<BrowserRouter>
 				<Routes>
-					<Route 
+					{/* <Route 
 						path="/" 
 						element={
 							<Suspense fallback={< FullScreenLoader />}>
 								<ComingSoon />
+							</Suspense>
+						} 
+					/> */}
+					<Route 
+						path="/" 
+						element={
+							<Suspense fallback={< FullScreenLoader />}>
+								<Website />
 							</Suspense>
 						} 
 					/>
@@ -49,6 +60,7 @@ function App() {
 					<Route path="/managemerchant" element={<ManageMerchant />} />
 					<Route path="/viewmerchant" element={<ViewMerchant />} />
 					<Route path="/transactionmonitoring" element={<TransactionMonitoring />} />
+					<Route path="/api" element={<ApiDoc />} />
 
 					<Route path="*" element={<NotFound />} />
 				</Routes>

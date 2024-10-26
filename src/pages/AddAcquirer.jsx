@@ -4,7 +4,7 @@ import "../styles/pages.css";
 
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import Input from "../components/utilitis/Input";
+import {Input} from "../components/utilitis/Input";
 
 function AddAcquirer() {
 

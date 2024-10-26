@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { Link } from "react-router-dom";
 
 // css
@@ -23,40 +23,132 @@ import card5 from "../../media/image/card5lines.webp";
 
 const Landing_Page = () => {
     const [selectedHeader, setSelectedHeader] = useState("home");
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [isHovered, setIsHovered] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [borderAngle, setBorderAngle] = useState('0.5turn');
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+        setIsAnimating(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+        
+        const element = document.querySelector('.notify-line');
+        const currentAngle = getComputedStyle(element).getPropertyValue('--border-angle');
+        setBorderAngle(currentAngle.trim());
+
+        element.classList.add('animate-end');
+
+        element.addEventListener('animationend', handleAnimationEnd, { once: true });
+    };
+
+    const handleAnimationEnd = (event) => {
+        if (event.animationName === 'rotateGradientBorderEnd') {
+            setIsAnimating(false);
+        }
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+            setIsMenuOpen(false); 
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const handleNavClick = (selected) => {
         setSelectedHeader(selected);
+        setIsMenuOpen(false); 
     };
 
     return (
-        <div id="body">
+        <div className="Website">
             {/* Header Section */}
-            <section id="website_header">
-                <div className="website_header">
-                    <div className="company_Name">
-                        <img
-                            className="company_logo"
-                            src={Company_Logo_short}
-                            alt="Axipays brand logo"
-                        />
-                        <h3>Axipays</h3>
+            {isMobile ? (
+                <div className="mobile-header">
+                    <div className="moblie-header-head">
+                    <div className="mobile-header-left">
+                        <img src={Company_Logo_short} alt="Axipays logo" className="company_logo" />
                     </div>
-                    <div className="nav">
-                        <ul>
-                            {["home", "pricing", "services", "features", "blog", "contact"].map(
-                                (item) => (
-                                    <li
-                                        key={item}
-                                        className={`${selectedHeader === item ? "active" : ""} ${item === "pricing" ? "pricing-active" : ""
-                                            }`}
-                                        onClick={() => handleNavClick(item)}
-                                    >
-                                        {item.charAt(0).toUpperCase() + item.slice(1)}
-                                    </li>
-                                )
-                            )}
-                        </ul>
+                    <button
+                        className="menu-icon"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    >
+                        {isMenuOpen ? (
+                    <Icon
+                        name="close_fill"  
+                        width={20}
+                        height={20}
+                        color="#ffffff"
+                    />
+                ) : (
+                    <Icon
+                        name="menu_open" 
+                        width={20}
+                        height={20}
+                        color="#ffffff"
+                    />
+                )}
+                    </button>
                     </div>
+                </div>
+            ) : (
+                <section id="website_header">
+                    <div className="website_header">
+                        <div className="company_Name">
+                            <img
+                                className="company_logo"
+                                src={Company_Logo_short}
+                                alt="Axipays brand logo"
+                            />
+                            <h3>Axipays</h3>
+                        </div>
+                        <div className="nav">
+                            <ul>
+                                {["home", "pricing", "services", "features", "blog", "contact"].map(
+                                    (item) => (
+                                        <li
+                                            key={item}
+                                            className={`${selectedHeader === item ? "active" : ""}`}
+                                            onClick={() => handleNavClick(item)}
+                                        >
+                                            {item.charAt(0).toUpperCase() + item.slice(1)}
+                                        </li>
+                                    )
+                                )}
+                            </ul>
+                        </div>
+                        <div className="auth_btns">
+                            <button className="login_auth_btn">
+                                <Link to="/auth">Login</Link>
+                            </button>
+                            <button className="signup_auth_btn">Sign up</button>
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Slide-In Menu for Mobile */}
+            {isMobile && isMenuOpen && (
+                <div className="slide-menu">
+                    <ul>
+                        {["home", "pricing", "services", "features", "blog", "contact"].map(
+                            (item) => (
+                                <li
+                                    key={item}
+                                    className={`${selectedHeader === item ? "active" : ""}`}
+                                    onClick={() => handleNavClick(item)}
+                                >
+                                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                                </li>
+                            )
+                        )}
+                    </ul>
                     <div className="auth_btns">
                         <button className="login_auth_btn">
                             <Link to="/login">Login</Link>
@@ -64,13 +156,17 @@ const Landing_Page = () => {
                         <button className="signup_auth_btn">Sign up</button>
                     </div>
                 </div>
-            </section>
+            )}
+
 
             {/* Landing Page Section */}
             <section id="landingpage">
                 <div className="landingpage full_page">
                     <div className="countainer">
-                        <div className="notify-line">
+                        <div  className={`notify-line ${isHovered || isAnimating ? 'hover' : ''} ${!isHovered && isAnimating ? 'animate-end' : ''}`}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        style={{ '--current-angle': borderAngle }}>
                             <div className="outline">
                                 <p>
                                     Connect us to redefine payments - Discover more{" "}
@@ -80,9 +176,9 @@ const Landing_Page = () => {
                                         height={25}
                                         color="white"
 
-                                        // src={Right_arrow}
-                                        // alt="right arrow icon"
-                                        // className="icon spcl_icon"
+                                    // src={Right_arrow}
+                                    // alt="right arrow icon"
+                                    // className="icon spcl_icon"
                                     />
                                 </p>
                             </div>
@@ -96,42 +192,49 @@ const Landing_Page = () => {
                                 Expand your reach and offer secure, reliable card payment
                                 solutions to your business partners across the globe.
                             </p>
+                            <img src={card3} alt="card3" className="landingpage-card3" />
                         </div>
                     </div>
+                    
                     <div className="landingpage-infograph-countainer">
-                        <img src={card1} alt="card1" className="card1" />
-                        <img src={card2} alt="card2" className="card2" />
-                        <img src={card3} alt="card3" className="card3" />
-                        <img src={card4} alt="card4" className="card4" />
-                        <img src={card5} alt="card5" className="card5" />
-                        <div className="card5-text">
-                            <div className="card5-header">
-                                <p className="card5-header-first">Text</p>
-                                <p className="card5-header-second">Aug 2024</p>
-                                <p className="card5-header-third">
-                                    Last 28 days 
-                                    <Icon
-                                        name="arrow_down"
-                                        width={25}
-                                        height={25}
-                                        color="white"
-                                    />
-                                </p>
-                            </div>
-                            <div className="card5-body">
-                                <p>52K</p>
-                            </div>
-                            <div className="card5-footer">
-                                <p>Marketing campaign effectiveness</p>
+    
+                        <div className="first-card">
+                            <img src={card5} alt="card5" className="landingpage-card5" />
+                            <div className="card5-text">
+                                <div className="card5-header">
+                                    <p className="card5-header-first">Text</p>
+                                    <p className="card5-header-second">Aug 2024</p>
+                                    <p className="card5-header-third">
+                                        Last 28 days <Icon
+                                            name="arrow_down"
+                                            width={25}
+                                            height={25}
+                                            color="white"
+                                            className="last28daysarrow"
+                                        />
+                                    </p>
+                                </div>
+                                <div className="card5-body">
+                                    <p>52K</p>
+                                </div>
+                                <div className="card5-footer">
+                                    <p>Marketing campaign effectiveness</p>
+                                </div>
                             </div>
                         </div>
+                        <div className="second-card">
+                            <img src={card1} alt="card1" className="landingpage-card1" />
+                            <img src={card2} alt="card2" className="landingpage-card2" />
+                        </div>
+                        <div className="third-card">    <img src={card4} alt="card4" className="landingpage-card4" /></div>
+                
                     </div>
                 </div>
             </section>
 
             {/* Service Section */}
             <Service />
-        
+
             {/* Feature Section */}
             <Feature />
 

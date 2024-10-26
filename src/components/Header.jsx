@@ -1,7 +1,9 @@
 import React from 'react';
 import Icon from "../media/icon/icons.jsx";
-
 import '../styles/component.css';
+
+const userName = localStorage.getItem("username");
+const role = localStorage.getItem("role");
 
 function Header() {
     return (
@@ -40,8 +42,8 @@ function Header() {
                 <div className='profileSection'>
                     <div className='img-section'></div>
                     <div className='details-section'>
-                        <p className='userName'>Axipays</p>
-                        <p className='userRole'>admin</p>
+                        <p className='userName'>{userName}</p>
+                        <p className='userRole'>{role}</p>
                     </div>
                     <div className='dropDown-section'>
                         <div className='ic'>

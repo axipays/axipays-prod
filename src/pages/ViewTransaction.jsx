@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/pages.css";
 
-const ViewTransaction = ({ data, onViewClick }) => {
+const ViewTransaction = ({ data, onBackClick }) => {
     return (
         <div className="view-transaction-container">
             <h4>Transaction Details</h4>
@@ -12,6 +12,9 @@ const ViewTransaction = ({ data, onViewClick }) => {
                     </div>
                 ))}
             </div>
+            <button className="back-button" onClick={onBackClick}>
+                Back to Transaction Monitoring
+            </button>
         </div>
     );
 };

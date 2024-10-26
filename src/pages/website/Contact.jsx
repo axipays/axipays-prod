@@ -5,6 +5,13 @@ import Icon from "../../media/icon/icons";
 
 import Company_Logo_short from '../../media/image/companyLogo_short.webp';
 import Contact_circularlines from "../../media/image/contact-half-images.webp";
+import jcb from "../../media/image/jcb.webp";
+import discover from "../../media/image/discover.webp";
+import visa from "../../media/image/visa.webp";
+import mastercard from "../../media/image/mastercard.webp";
+import unionpay from "../../media/image/unionpay.webp";
+import pci from "../../media/image/pci.webp";
+import ssl from "../../media/image/ssl.webp";
 
 // import visa from "../media/image/visa.png";
 // import mastercard from "../media/image/mastercard.png";
@@ -45,23 +52,23 @@ const Contact = () => {
 						<div className="social-handles">
 							<div>
 								{/* <img src={linkedin} alt="linkedin"></img> */}
-								< Icon name="calendar"/>
+								< Icon name="linkdin" width={20} height={20}/>
 								<Link to="https://linkedin.com">@axipays-linkedin</Link>
 							</div>
 							<div>
 								{/* <img src={skype} alt="skype"></img> */}
-								< Icon name="calendar"/>
+								< Icon name="skype"  width={20} height={20}/>
 								<a href="www.skype.com">@axipays-skype</a>
 							</div>
 
 							<div>
 								{/* <img src={telegram} alt="telegram"></img> */}
-								< Icon name="calendar"/>
+								< Icon name="telegram"  width={20} height={20}/>
 								<a href="www.telegram.com">@axipays-telegram</a>
 							</div>
 							<div>
 								{/* <img src={mail} alt="gmail"></img> */}
-								< Icon name="calendar"/>
+								< Icon name="google" width={20} height={20}/>
 								<a href="www.gmail.com">@axipays-gmail</a>
 							</div>
 						</div>
@@ -120,17 +127,16 @@ const Contact = () => {
 								{/* <img src={discover} alt="discover" />
 								<img src={unionpay} alt="unionpay" />
 								<img src={jcb} alt="jcb" /> */}
-								< Icon name="calendar"/>
-								< Icon name="calendar"/>
-								< Icon name="calendar"/>
-								< Icon name="calendar"/>
-								< Icon name="calendar"/>
+								<img src={visa} alt="visa" />
+								<img src={mastercard} alt="mastercard" />
+								<img src={jcb} alt="jcb" />
+								<img src={discover} alt="discover" />
+								<img src={unionpay} alt="unionpay" />
 							</div>
 							<div className="certificates">
-								{/* <img src={pci} alt="pci" />
-								<img src={ssl} alt="ssl" /> */}
-								< Icon name="calendar"/>
-								< Icon name="calendar"/>
+								<img src={pci} alt="pci" />
+								<img src={ssl} alt="ssl" />
+
 							</div>
 						</div>
 					</div>

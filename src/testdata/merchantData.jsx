@@ -9,6 +9,8 @@ const merchantData = [
     {client: "Next Global Era", status: "Active", email: "mailto:nextglobalera@gmail.com", skype: "liv.cid: 312645970", url: "http://duxgroup.com", details: "" },
     {client: "Horizon Solaris", status: "Active", email: "mailto:horizon@gmail.com", skype: "liv.cid: 204016397", url: "http://horizonsolaris.com", details: "" },
     {client: "Bullsbet", status: "Inactive", email: "mailto:bullsbet@gmail.com", skype: "liv.cid: 188937542", url: "http://bullsbet.com", details: "" },
+    {client: "Horizon Solaris", status: "Active", email: "mailto:horizon@gmail.com", skype: "liv.cid: 204016397", url: "http://horizonsolaris.com", details: "" },
+    {client: "Bullsbet", status: "Inactive", email: "mailto:bullsbet@gmail.com", skype: "liv.cid: 188937542", url: "http://bullsbet.com", details: "" },
   ];
   
   export default merchantData;
